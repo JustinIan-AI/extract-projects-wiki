@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "prompt": "分析这个项目 /path/to/my-java-project",
+    "expected": "识别为 Java 技术栈，生成项目 Wiki 和规则文件（CLAUDE.md + AGENTS.md）"
+  },
+  {
+    "id": 2,
+    "prompt": "https://github.com/example/project 帮我生成 AI 规则",
+    "expected": "克隆 GitHub 仓库，识别技术栈，生成 CLAUDE.md + AGENTS.md + .claude/rules/"
+  },
+  {
+    "id": 3,
+    "prompt": "只给我生成项目文档，不要规则文件",
+    "expected": "仅生成 wiki/human/ 目录下的文档（PROJECT_WIKI.md、BUSINESS_QA.md、ARCHITECTURE.md）"
+  },
+  {
+    "id": 4,
+    "prompt": "帮我分析这个 Python 项目并生成完整的知识库",
+    "expected": "识别为 Python 技术栈，生成完整的双轨知识库（wiki/human/ + wiki/ai/）和规则文件"
+  },
+  {
+    "id": 5,
+    "prompt": "生成 TypeScript 项目的 AI 编程规则",
+    "expected": "识别为 TypeScript/JavaScript 技术栈，生成匹配的规则文件模板"
+  }
+]

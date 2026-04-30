@@ -1,0 +1,94 @@
+{
+  "patterns": [
+    {
+      "id": "p001",
+      "name": "多阶段执行模式",
+      "category": "workflow",
+      "source_skill": "repo-to-wiki",
+      "applied_to": ["repo-to-wiki"],
+      "description": "将分析流程分为 5 个明确的阶段，确保流程完整性和可追踪性",
+      "when_to_apply": "当技能需要处理复杂的多步骤任务时",
+      "implementation_hint": "使用清晰的阶段划分，每个阶段有明确的输入输出",
+      "success_count": 1,
+      "user_satisfaction": "high",
+      "created_at": "2026-04-23",
+      "last_used": "2026-04-23"
+    },
+    {
+      "id": "p002",
+      "name": "双轨知识库模式",
+      "category": "output",
+      "source_skill": "repo-to-wiki",
+      "applied_to": ["repo-to-wiki"],
+      "description": "同时生成人用和 AI 用的知识库，满足不同用户的需求",
+      "when_to_apply": "当技能需要为不同类型的用户生成内容时",
+      "implementation_hint": "创建分离的输出目录，为人和 AI 提供不同格式的内容",
+      "success_count": 1,
+      "user_satisfaction": "high",
+      "created_at": "2026-04-23",
+      "last_used": "2026-04-23"
+    },
+    {
+      "id": "p003",
+      "name": "多层次分析模式",
+      "category": "analysis",
+      "source_skill": "repo-to-wiki",
+      "applied_to": ["repo-to-wiki"],
+      "description": "提供不同深度的分析选项，适应不同的使用场景",
+      "when_to_apply": "当技能需要处理不同规模和复杂度的项目时",
+      "implementation_hint": "定义多个分析深度级别，每个级别有明确的文件读取策略",
+      "success_count": 1,
+      "user_satisfaction": "high",
+      "created_at": "2026-04-23",
+      "last_used": "2026-04-23"
+    },
+    {
+      "id": "p004",
+      "name": "错误处理模式",
+      "category": "robustness",
+      "source_skill": "repo-to-wiki",
+      "applied_to": ["repo-to-wiki"],
+      "description": "全面的异常处理策略，提高技能的鲁棒性",
+      "when_to_apply": "当技能需要处理不可预测的错误情况时",
+      "implementation_hint": "在每个关键步骤添加错误处理，提供清晰的错误信息",
+      "success_count": 1,
+      "user_satisfaction": "high",
+      "created_at": "2026-04-23",
+      "last_used": "2026-04-23"
+    },
+    {
+      "id": "p005",
+      "name": "并行执行优化",
+      "category": "performance",
+      "source_skill": "repo-to-wiki",
+      "applied_to": ["repo-to-wiki"],
+      "description": "使用并发扫描提高大型项目的分析速度",
+      "when_to_apply": "当技能需要处理大型项目或多个文件时",
+      "implementation_hint": "使用多线程或异步处理进行并行扫描",
+      "success_count": 0,
+      "user_satisfaction": "medium",
+      "created_at": "2026-04-23",
+      "last_used": "2026-04-23"
+    },
+    {
+      "id": "p006",
+      "name": "智能缓存机制",
+      "category": "performance",
+      "source_skill": "repo-to-wiki",
+      "applied_to": ["repo-to-wiki"],
+      "description": "添加缓存功能，避免重复分析",
+      "when_to_apply": "当技能需要重复分析相同项目时",
+      "implementation_hint": "使用文件哈希或时间戳来判断是否需要重新分析",
+      "success_count": 0,
+      "user_satisfaction": "medium",
+      "created_at": "2026-04-23",
+      "last_used": "2026-04-23"
+    }
+  ],
+  "meta": {
+    "total_evolutions": 1,
+    "most_effective_category": "workflow",
+    "version": "1.0.0",
+    "last_updated": "2026-04-23"
+  }
+}
