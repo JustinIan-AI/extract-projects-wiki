@@ -1,11 +1,11 @@
 ---
 name: repo-to-wiki
-description: "分析代码仓库或 GitHub 链接，提取系统架构、业务流程、核心类清单，生成双轨知识库（Wiki）和 AI 编程规则文件（CLAUDE.md + AGENTS.md）。使用场景：1) 接手新项目时快速理解代码结构 2) 为项目生成 AI 友好的规则文件 3) 从已有项目抽取可复用的规则规范。触发词：分析仓库、生成wiki、生成规则、项目文档、AI规则文件、知识图谱、架构文档。不适用：代码修改、重构、生成。"
+description: "分析代码仓库或 GitHub 链接，提取系统架构、业务流程、核心类清单，生成双轨知识库（Wiki）和 AI 编程规则文件（CLAUDE.md + AGENTS.md）。核心能力：1) 项目初始化规则设定 2) 规则动态更新工具 3) 老旧项目规范快速抽取。使用场景：接手新项目、生成 AI 规则文件、抽取可复用规范、快速理解 legacy 项目。触发词：分析仓库、生成wiki、生成规则、项目文档、AI规则文件、知识图谱、架构文档、项目初始化、规则更新、抽取规范。"
 author: JustinIan-AI
-version: 1.1.0
+version: 1.2.0
 lastUpdated: 2026-05-05
 license: MIT
-tags: [knowledge-extraction, wiki-generation, rule-mining, codebase-analysis]
+tags: [knowledge-extraction, wiki-generation, rule-mining, codebase-analysis, project-initialization, legacy-analysis]
 related_skills:
   - nexus-mapper
   - nexus-query
@@ -162,6 +162,175 @@ related_skills:
 3. **Version Lock** — 禁止升级依赖版本，除非明确要求
 4. **Gradual Improvement Only** — 只能做方法内的安全改进
 5. **Pitfall Awareness** — 已知陷阱必须显式标注
+
+## 三大核心能力详解
+
+### 1. 项目初始化规则设定
+
+**能力概述**：为新项目提供标准化的规则初始化能力
+
+**初始化流程**：
+```
+新项目创建 → 选择技术栈模板 → 生成基础规则框架 → 自定义规则扩展 → 导出规则文件
+```
+
+**核心输出**：
+- `CLAUDE.md` — 主规则文件，包含技术栈配置和代码风格指南
+- `AGENTS.md` — AI 协作规范，定义代码审查和协作流程
+- `.claude/rules/` — 模块化规则目录，按技术栈分类
+
+**支持的技术栈模板**：
+| 技术栈 | 规则文件 | 适用场景 |
+|--------|----------|----------|
+| Java/Spring Boot | `java/api-design.md`, `java/architecture.md`, `java/testing.md` | 企业级后端服务 |
+| Python/Django | `python/api-design.md`, `python/architecture.md`, `python/testing.md` | Web 开发、数据工程 |
+| JavaScript/TypeScript | `javascript/api-design.md`, `javascript/architecture.md`, `javascript/testing.md` | 前端应用、Node.js 服务 |
+| Go | `go/api-design.md`, `go/architecture.md`, `go/testing.md` | 高性能后端、云原生 |
+
+**初始化命令**：
+```bash
+# 使用默认模板初始化
+python3 scripts/main.py /path/to/new-project --init
+
+# 指定技术栈初始化
+python3 scripts/main.py /path/to/new-project --init --tech-stack java
+
+# 从现有模板导入
+python3 scripts/main.py /path/to/new-project --init --template ./templates/java-standard
+```
+
+---
+
+### 2. 规则动态更新工具
+
+**能力概述**：在项目演进过程中，支持规则的增量更新和迭代优化
+
+**动态更新机制**：
+
+#### 触发条件
+| 触发事件 | 更新内容 | 工具支持 |
+|----------|----------|----------|
+| 技术栈升级 | 规则版本同步升级 | `rule_generator.py --upgrade` |
+| 团队规范变更 | 规则内容增量更新 | `rule_generator.py --patch` |
+| 发现代码问题 | 规则漏洞修补 | `rule_generator.py --fix` |
+| 新成员加入 | 规则文档增强 | `rule_generator.py --onboard` |
+
+#### 更新工具链
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    规则动态更新工具链                        │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  rule_generator.py --diff          # 检测规则差异           │
+│       │                                                     │
+│       ├── 对比新旧规则版本                                   │
+│       ├── 识别冲突点                                         │
+│       └── 生成更新建议清单                                   │
+│                                                             │
+│  rule_generator.py --merge         # 合并规则变更           │
+│       │                                                     │
+│       ├── 智能合并冲突解决                                   │
+│       ├── 保留自定义规则                                     │
+│       └── 生成变更日志                                       │
+│                                                             │
+│  rule_generator.py --verify        # 验证规则有效性         │
+│       │                                                     │
+│       ├── 语法检查                                           │
+│       ├── 规则冲突检测                                       │
+│       └── 测试用例验证                                       │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+#### 更新命令示例
+
+```bash
+# 检查规则更新
+python3 scripts/rule_generator.py /path/to/project --diff
+
+# 合并更新（保留自定义）
+python3 scripts/rule_generator.py /path/to/project --merge --preserve-custom
+
+# 验证更新后的规则
+python3 scripts/rule_generator.py /path/to/project --verify
+
+# 一键更新所有规则
+python3 scripts/main.py /path/to/project --update-rules
+```
+
+**[检查点]**：规则更新前会展示变更预览，等待用户确认后再执行。
+
+---
+
+### 3. 老旧项目规范快速抽取
+
+**能力概述**：针对 legacy 项目，自动分析并抽取现有规范，生成 AI 友好的规则文件
+
+**抽取流程**：
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                   Legacy 项目规范抽取流程                    │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  Phase 1: 代码扫描                                           │
+│       │                                                     │
+│       ├── 技术栈识别（语言、框架、工具）                      │
+│       ├── 代码风格分析（命名、缩进、格式）                    │
+│       └── 架构模式识别（MVC、DDD、分层等）                   │
+│                                                             │
+│  Phase 2: 规则提取                                           │
+│       │                                                     │
+│       ├── 从代码实践中归纳规则                               │
+│       ├── 从注释/文档中提取规范                              │
+│       └── 从 Git 历史中发现工作流                           │
+│                                                             │
+│  Phase 3: 规则结构化                                         │
+│       │                                                     │
+│       ├── 生成标准规则文件格式                               │
+│       ├── 补充缺失的规范文档                                 │
+│       └── 标记低置信度内容                                   │
+│                                                             │
+│  Phase 4: 规则验证                                           │
+│       │                                                     │
+│       ├── 规则与代码的一致性检查                             │
+│       ├── 规则冲突检测                                       │
+│       └── 生成验证报告                                       │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**抽取命令示例**：
+
+```bash
+# 快速抽取（标准模式）
+python3 scripts/main.py /path/to/legacy-project --extract-rules
+
+# 深度抽取（包含 Git 历史分析）
+python3 scripts/main.py /path/to/legacy-project --extract-rules --deep
+
+# 仅抽取代码风格规则
+python3 scripts/main.py /path/to/legacy-project --extract-rules --style-only
+
+# 抽取并验证规则一致性
+python3 scripts/main.py /path/to/legacy-project --extract-rules --validate
+```
+
+**抽取输出**：
+
+| 输出文件 | 内容说明 |
+|----------|----------|
+| `CLAUDE.md` | 主规则文件，包含项目特定规则 |
+| `AGENTS.md` | AI 协作规范 |
+| `.claude/rules/` | 按技术栈分类的规则模块 |
+| `RULES_AUDIT.md` | 规则审计报告，包含置信度评估 |
+| `CONVENTIONS.md` | 从代码中归纳的编码约定 |
+
+**置信度标记**：
+- `HIGH_CONFIDENCE` — 基于大量代码实践归纳
+- `MEDIUM_CONFIDENCE` — 基于有限样本推断
+- `LOW_CONFIDENCE` — 推测性规则，需要人工确认
 
 ## 质量红线
 

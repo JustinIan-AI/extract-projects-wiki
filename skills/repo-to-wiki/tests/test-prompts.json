@@ -23,5 +23,30 @@
     "id": 5,
     "prompt": "生成 TypeScript 项目的 AI 编程规则",
     "expected": "识别为 TypeScript/JavaScript 技术栈，生成匹配的规则文件模板"
+  },
+  {
+    "id": 6,
+    "prompt": "帮我初始化一个新的 Java 项目规则",
+    "expected": "使用 Java/Spring Boot 模板初始化项目，生成 CLAUDE.md、AGENTS.md 和 .claude/rules/ 目录"
+  },
+  {
+    "id": 7,
+    "prompt": "更新项目的规则文件",
+    "expected": "检测规则差异，展示变更预览，合并更新并保留自定义规则，生成变更日志"
+  },
+  {
+    "id": 8,
+    "prompt": "帮我从这个老旧项目中抽取编码规范",
+    "expected": "分析 legacy 项目代码，归纳编码约定，生成规则文件并标记置信度，输出 RULES_AUDIT.md 审计报告"
+  },
+  {
+    "id": 9,
+    "prompt": "启用 GitNexus 可视化分析项目",
+    "expected": "启动 GitNexus 后台索引，分析 Git 历史，生成热点追踪和依赖图谱，提供可视化入口"
+  },
+  {
+    "id": 10,
+    "prompt": "验证规则文件的一致性",
+    "expected": "检查规则语法、检测规则冲突、运行测试用例验证，生成验证报告"
   }
 ]
