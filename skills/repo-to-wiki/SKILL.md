@@ -1,25 +1,49 @@
 ---
 name: repo-to-wiki
-description: "分析代码仓库或 GitHub 链接，提取系统架构、业务流程、核心类清单，生成双轨知识库（Wiki）和 AI 编程规则文件（CLAUDE.md + AGENTS.md）。核心能力：1) 项目初始化规则设定 2) 规则动态更新工具 3) 老旧项目规范快速抽取。使用场景：接手新项目、生成 AI 规则文件、抽取可复用规范、快速理解 legacy 项目。触发词：分析仓库、生成wiki、生成规则、项目文档、AI规则文件、知识图谱、架构文档、项目初始化、规则更新、抽取规范。"
+description: "分析代码仓库或 GitHub 链接，提取系统架构、业务流程、核心类清单，生成双轨知识库（Wiki）和 AI 编程规则文件（CLAUDE.md + AGENTS.md）。核心能力：1) 项目初始化规则设定 - 为新项目提供标准化规则模板 2) 规则动态更新工具 - 支持增量更新和迭代优化 3) 老旧项目规范快速抽取 - 自动分析 legacy 项目并生成 AI 友好规则。使用场景：接手新项目、生成 AI 规则文件、抽取可复用规范、快速理解 legacy 项目。触发词：分析仓库、生成wiki、生成规则、项目文档、AI规则文件、知识图谱、架构文档、项目初始化、规则更新、抽取规范。"
 author: JustinIan-AI
-version: 1.2.0
+version: 2.0.0
 lastUpdated: 2026-05-05
 license: MIT
-tags: [knowledge-extraction, wiki-generation, rule-mining, codebase-analysis, project-initialization, legacy-analysis]
+tags: [knowledge-extraction, wiki-generation, rule-mining, codebase-analysis, project-initialization, legacy-analysis, ai-assistant, developer-tools]
 related_skills:
   - nexus-mapper
   - nexus-query
   - gitnexus-explorer
+evaluation_metrics:
+  - scan_coverage: "代码文件扫描覆盖率 >= 95%"
+  - tech_stack_accuracy: "技术栈识别准确率 >= 98%"
+  - rule_confidence: "规则置信度分布: HIGH >= 70%, MEDIUM >= 25%, LOW <= 5%"
+  - execution_time: "标准项目分析时间 < 2分钟"
+  - output_quality: "输出文件完整性 >= 95%"
+checkpoints:
+  - input_validation: "验证输入类型和可访问性"
+  - tech_stack_detection: "确认技术栈识别结果"
+  - output_overwrite: "确认是否覆盖已有文件"
+  - gitnexus_enable: "确认是否启用 GitNexus 可视化"
+  - rule_update: "确认规则更新变更内容"
+  - final_review: "最终输出确认"
 ---
 
 # repo-to-wiki — AI 驱动的项目知识抽取与规则生成
 
-> 分析代码仓库或 GitHub 链接，生成双轨知识库（human + ai Wiki）和 AI 编程规则文件（CLAUDE.md + AGENTS.md）。
+> 分析代码仓库或 GitHub 链接，生成双轨知识库（human + AI Wiki）和 AI 编程规则文件（CLAUDE.md + AGENTS.md）。
+
+## 🌟 核心价值主张
+
+- **一键知识生成**：从代码仓库到完整知识库的自动化转换
+- **双轨输出**：同时生成人类可读文档和 AI 可消费规则
+- **智能规则提取**：自动归纳编码规范，支持新旧项目
+- **持续迭代**：规则动态更新机制，适应项目演进
 
 ## Input Types
 
-- **本地路径**：`/path/to/project`
-- **GitHub URL**：`https://github.com/username/repo`（支持 tree/branch/path、PR 链接）
+| 输入类型 | 格式示例 | 处理方式 |
+|----------|----------|----------|
+| **本地路径** | `/path/to/project` | 直接扫描 |
+| **GitHub URL** | `https://github.com/username/repo` | 克隆到临时目录 |
+| **GitHub PR** | `https://github.com/username/repo/pull/123` | 克隆并切换到 PR 分支 |
+| **GitHub 子目录** | `https://github.com/username/repo/tree/main/src` | 克隆并限定子目录 |
 
 ## Output Structure
 
@@ -27,38 +51,47 @@ related_skills:
 {output_dir}/
 ├── wiki/                        # 双轨知识库
 │   ├── human/                   # 给人读的文档
-│   │   ├── PROJECT_WIKI.md      # 项目综合手册
-│   │   ├── BUSINESS_QA.md       # 业务问卷
-│   │   └── ARCHITECTURE.md      # 架构文档
+│   │   ├── PROJECT_WIKI.md      # 项目综合手册（核心入口）
+│   │   ├── BUSINESS_QA.md       # 业务问答集
+│   │   ├── ARCHITECTURE.md      # 架构文档
+│   │   └── MODULES.md           # 模块清单
 │   └── ai/                      # 给 AI 读的结构化知识
 │       ├── _index.json          # AI 路由总控
 │       ├── L0_profile.md        # 技术约束
 │       ├── L1_architecture.md   # 系统架构
 │       ├── L2_modules.md        # 模块分析
 │       └── L3_business.md       # 业务逻辑
-├── CLAUDE.md                    # Claude Code 主规则
+├── CLAUDE.md                    # Claude Code 主规则（核心）
 ├── AGENTS.md                    # 通用 AI 协作规范
 ├── CLAUDE.local.md              # 本地配置模板
-├── .claude/rules/               # 模块化规则
+├── .claude/rules/               # 模块化规则目录
+│   ├── {tech_stack}/            # 按技术栈分类
+│   │   ├── api-design.md
+│   │   ├── architecture.md
+│   │   ├── testing.md
+│   │   └── conventions.md
+│   └── project-specific/        # 项目特定规则
 ├── .cursorrules                 # Cursor 规则（可选）
 ├── .copilot-instructions.md     # Copilot 规则（可选）
-└── .gitnexus/                   # GitNexus 知识图谱（可选）
+├── .gitnexus/                   # GitNexus 知识图谱（可选）
+└── RULES_AUDIT.md               # 规则审计报告
 ```
 
 ## 子技能说明
 
-| 子技能 | 职责 | 调用方式 |
-|--------|------|----------|
-| **nexus-mapper** | AST 解析、代码结构分析、文件树生成 | Phase 1 自动调用 |
-| **nexus-query** | 代码查询、依赖关系分析 | Phase 2 按需调用 |
-| **gitnexus-explorer** | Git 历史分析、热点追踪、知识图谱可视化 | Phase 2 可选调用 |
+| 子技能 | 职责 | 调用阶段 | 依赖要求 |
+|--------|------|----------|----------|
+| **nexus-mapper** | AST 解析、代码结构分析、文件树生成 | Phase 1 | Python 3.8+ |
+| **nexus-query** | 代码查询、依赖关系分析 | Phase 2 (按需) | Python 3.8+ |
+| **gitnexus-explorer** | Git 历史分析、热点追踪、知识图谱可视化 | Phase 2 (可选) | Node.js 18+ |
 
-## Execution Flow
+## 🔄 Execution Flow
 
 ### Phase 0: 输入处理
 
-**输入**：本地路径（`/path/to/project`）或 GitHub URL（`https://github.com/username/repo`）
-**输出**：验证后的项目根目录路径、技术栈类型标识
+**输入**：本地路径或 GitHub URL  
+**输出**：验证后的项目根目录路径、技术栈类型标识  
+**[检查点]**：input_validation
 
 1. 识别输入类型（本地路径 vs GitHub URL）
 2. GitHub URL → `scripts/github_fetcher.py` 克隆到临时目录
@@ -69,18 +102,20 @@ related_skills:
 
 ### Phase 1: 项目扫描
 
-**输入**：项目根目录路径、技术栈类型
-**输出**：扫描结果（文件统计、模块结构、核心类列表、技术栈详情）
+**输入**：项目根目录路径、技术栈类型  
+**输出**：扫描结果（文件统计、模块结构、核心类列表、技术栈详情）  
+**[检查点]**：tech_stack_detection
 
-1. 遍历项目文件，统计文件类型和数量
+1. 遍历项目文件，统计文件类型和数量（扫描覆盖率 >= 95%）
 2. 识别模块结构（目录层次）
 3. 分析构建配置文件，提取技术栈和依赖
 4. **[子技能 nexus-mapper]** 生成 AST 节点数据
 5. 识别核心类（Controller/Service/Repository 等）
+6. 输出技术栈识别结果，等待用户确认
 
 ### Phase 2: 知识提取
 
-**输入**：扫描结果、技术栈类型
+**输入**：扫描结果、技术栈类型  
 **输出**：知识图谱（业务流程、架构模式、安全约束、性能要求）
 
 **双引擎协同分析**：
@@ -96,7 +131,7 @@ related_skills:
 │      ├── 文件结构 → 模块划分                                 │
 │      └── 技术栈 → 框架/中间件识别                            │
 │                                                              │
-│  引擎 B: gitnexus-explorer（Git 历史分析）← 新增            │
+│  引擎 B: gitnexus-explorer（Git 历史分析）                  │
 │      │                                                      │
 │      ├── 提交历史 → 分支策略、Commit 规范                    │
 │      ├── 热点追踪 → 高频修改文件、维护优先级                 │
@@ -109,7 +144,7 @@ related_skills:
 ```
 
 1. **[子技能 nexus-mapper]** 分析核心模块（hub analysis）
-2. **[子技能 gitnexus-explorer]** 分析 Git 历史，提取工作流规则
+2. **[子技能 gitnexus-explorer]** 分析 Git 历史，提取工作流规则（可选）
 3. 从代码中提取业务逻辑和功能清单
 4. 识别业务规则（通过注解、常量、验证逻辑）
 5. 从 Controller/Service 方法名推断核心业务流程
@@ -118,17 +153,19 @@ related_skills:
 
 ### Phase 3: Wiki 生成
 
-**输入**：知识图谱、技术栈类型
+**输入**：知识图谱、技术栈类型  
 **输出**：`wiki/human/` 和 `wiki/ai/` 目录下的文档
 
-1. 生成 human/ 文档（PROJECT_WIKI.md、BUSINESS_QA.md、ARCHITECTURE.md）
+1. 生成 human/ 文档（PROJECT_WIKI.md、BUSINESS_QA.md、ARCHITECTURE.md、MODULES.md）
 2. 生成 ai/ 文档（L0-L3 + _index.json）
 3. **[可选]** 嵌入 GitNexus 图谱链接（如已启用可视化）
+4. 验证输出完整性（>= 95%）
 
 ### Phase 4: 规则文件生成
 
-**输入**：扫描结果、知识图谱、技术栈类型
-**输出**：AI 编程规则文件集
+**输入**：扫描结果、知识图谱、技术栈类型  
+**输出**：AI 编程规则文件集  
+**[检查点]**：output_overwrite, rule_update
 
 1. **[检查点]** 检测输出目录是否存在已有规则文件，展示将覆盖/新增的文件列表，等待用户确认
 2. 生成 AGENTS.md（通用规则）
@@ -136,34 +173,23 @@ related_skills:
 4. 生成 .claude/rules/*.md（按技术栈选择模板）
 5. 生成其他工具规则（.cursorrules、.copilot-instructions.md）
 6. **[新增]** 从 GitNexus 历史分析结果中提取 Git 工作流规则，补充到 AGENTS.md
+7. **[检查点]** 展示规则更新预览，确认后执行
 
 ### Phase 5: 交互确认
 
-**输入**：生成的所有文件列表
-**输出**：用户确认结果、额外规则收集
+**输入**：生成的所有文件列表  
+**输出**：用户确认结果、额外规则收集  
+**[检查点]**：final_review
 
 1. 展示生成的文件列表和目录结构
-2. 询问用户是否需要调整输出内容或格式
-3. 收集用户反馈的额外规则或定制需求
-4. **[可选]** 提供 GitNexus 可视化入口（如已启用）
+2. 展示规则置信度分布统计
+3. 询问用户是否需要调整输出内容或格式
+4. 收集用户反馈的额外规则或定制需求
+5. **[可选]** 提供 GitNexus 可视化入口（如已启用）
 
-## 详细规范
+---
 
-- Wiki 内容规范：详见 [references/wiki-spec.md](references/wiki-spec.md)
-- 规则文件编写规范：详见 [references/rules-spec.md](references/rules-spec.md)
-- Legacy Rule Miner 方法论：详见 [references/rule-miner-methodology.md](references/rule-miner-methodology.md)
-- nexus-mapper 子技能：详见 [skills/nexus-mapper/SKILL.md](skills/nexus-mapper/SKILL.md)
-- gitnexus-explorer 子技能：详见 [skills/gitnexus-explorer/SKILL.md](skills/gitnexus-explorer/SKILL.md)
-
-## 核心原则
-
-1. **Copy-Paste First** — 新代码必须模仿最近的同类代码
-2. **No Surprise** — 禁止引入项目从未使用过的模式
-3. **Version Lock** — 禁止升级依赖版本，除非明确要求
-4. **Gradual Improvement Only** — 只能做方法内的安全改进
-5. **Pitfall Awareness** — 已知陷阱必须显式标注
-
-## 三大核心能力详解
+## 📚 三大核心能力详解
 
 ### 1. 项目初始化规则设定
 
@@ -186,6 +212,8 @@ related_skills:
 | Python/Django | `python/api-design.md`, `python/architecture.md`, `python/testing.md` | Web 开发、数据工程 |
 | JavaScript/TypeScript | `javascript/api-design.md`, `javascript/architecture.md`, `javascript/testing.md` | 前端应用、Node.js 服务 |
 | Go | `go/api-design.md`, `go/architecture.md`, `go/testing.md` | 高性能后端、云原生 |
+| Rust | `rust/api-design.md`, `rust/architecture.md`, `rust/testing.md` | 系统级编程、高性能服务 |
+| Vue.js | `vue/api-design.md`, `vue/architecture.md`, `vue/testing.md` | 前端框架应用 |
 
 **初始化命令**：
 ```bash
@@ -197,6 +225,9 @@ python3 scripts/main.py /path/to/new-project --init --tech-stack java
 
 # 从现有模板导入
 python3 scripts/main.py /path/to/new-project --init --template ./templates/java-standard
+
+# 生成所有支持工具的规则
+python3 scripts/main.py /path/to/new-project --init --all-tools
 ```
 
 ---
@@ -214,6 +245,7 @@ python3 scripts/main.py /path/to/new-project --init --template ./templates/java-
 | 团队规范变更 | 规则内容增量更新 | `rule_generator.py --patch` |
 | 发现代码问题 | 规则漏洞修补 | `rule_generator.py --fix` |
 | 新成员加入 | 规则文档增强 | `rule_generator.py --onboard` |
+| 季度规范评审 | 规则全面检查 | `rule_generator.py --audit` |
 
 #### 更新工具链
 
@@ -240,6 +272,12 @@ python3 scripts/main.py /path/to/new-project --init --template ./templates/java-
 │       ├── 规则冲突检测                                       │
 │       └── 测试用例验证                                       │
 │                                                             │
+│  rule_generator.py --audit         # 规则审计               │
+│       │                                                     │
+│       ├── 置信度评估                                         │
+│       ├── 规则覆盖率分析                                     │
+│       └── 优化建议生成                                       │
+│                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -255,8 +293,14 @@ python3 scripts/rule_generator.py /path/to/project --merge --preserve-custom
 # 验证更新后的规则
 python3 scripts/rule_generator.py /path/to/project --verify
 
+# 执行规则审计
+python3 scripts/rule_generator.py /path/to/project --audit
+
 # 一键更新所有规则
 python3 scripts/main.py /path/to/project --update-rules
+
+# 更新并推送变更到 Git
+python3 scripts/main.py /path/to/project --update-rules --commit
 ```
 
 **[检查点]**：规则更新前会展示变更预览，等待用户确认后再执行。
@@ -315,6 +359,9 @@ python3 scripts/main.py /path/to/legacy-project --extract-rules --style-only
 
 # 抽取并验证规则一致性
 python3 scripts/main.py /path/to/legacy-project --extract-rules --validate
+
+# 抽取并生成审计报告
+python3 scripts/main.py /path/to/legacy-project --extract-rules --audit
 ```
 
 **抽取输出**：
@@ -326,35 +373,58 @@ python3 scripts/main.py /path/to/legacy-project --extract-rules --validate
 | `.claude/rules/` | 按技术栈分类的规则模块 |
 | `RULES_AUDIT.md` | 规则审计报告，包含置信度评估 |
 | `CONVENTIONS.md` | 从代码中归纳的编码约定 |
+| `TECH_DEBT.md` | 技术债务分析报告（深度模式） |
 
 **置信度标记**：
-- `HIGH_CONFIDENCE` — 基于大量代码实践归纳
-- `MEDIUM_CONFIDENCE` — 基于有限样本推断
-- `LOW_CONFIDENCE` — 推测性规则，需要人工确认
+- `HIGH_CONFIDENCE` — 基于大量代码实践归纳（>= 10 个样本）
+- `MEDIUM_CONFIDENCE` — 基于有限样本推断（3-10 个样本）
+- `LOW_CONFIDENCE` — 推测性规则，需要人工确认（< 3 个样本）
+
+---
+
+## 详细规范
+
+- Wiki 内容规范：详见 [references/wiki-spec.md](references/wiki-spec.md)
+- 规则文件编写规范：详见 [references/rules-spec.md](references/rules-spec.md)
+- Legacy Rule Miner 方法论：详见 [references/rule-miner-methodology.md](references/rule-miner-methodology.md)
+- nexus-mapper 子技能：详见 [skills/nexus-mapper/SKILL.md](skills/nexus-mapper/SKILL.md)
+- gitnexus-explorer 子技能：详见 [skills/gitnexus-explorer/SKILL.md](skills/gitnexus-explorer/SKILL.md)
+
+## 核心原则
+
+1. **Copy-Paste First** — 新代码必须模仿最近的同类代码
+2. **No Surprise** — 禁止引入项目从未使用过的模式
+3. **Version Lock** — 禁止升级依赖版本，除非明确要求
+4. **Gradual Improvement Only** — 只能做方法内的安全改进
+5. **Pitfall Awareness** — 已知陷阱必须显式标注
+6. **Evidence-Based** — 所有规则必须基于实际代码证据
 
 ## 质量红线
 
 - 禁止编造内容，所有输出必须基于实际代码分析
 - 禁止输出空洞模板，未知内容标注 `LOW_CONFIDENCE`
-- 技术栈检测必须准确，规则模板必须与技术栈匹配
+- 技术栈检测必须准确（准确率 >= 98%），规则模板必须与技术栈匹配
 - 禁令必须搭配替代方案
+- 扫描覆盖率必须 >= 95%
+- 执行时间必须 < 2 分钟（标准项目）
 
-## 异常与边界条件
+## ⚠️ 异常与边界条件
 
-| 场景               | 触发条件                                  | 处理动作                                                    |
-| ------------------ | ----------------------------------------- | ----------------------------------------------------------- |
-| 项目不存在         | 本地路径无效或 GitHub 克隆失败            | 提示用户检查路径是否正确，退出流程                          |
-| 技术栈识别失败     | 无构建配置文件（pom.xml/package.json 等） | 标记为未知技术栈，使用通用模板，提示用户手动指定            |
-| 输出目录已有文件   | 目标文件已存在                            | **[检查点]** 询问用户「覆盖 / 跳过 / 追加」三选一      |
-| GitHub 权限不足    | 克隆失败（404/403/认证失败）              | 提示用户检查权限，提供本地路径作为替代方案                  |
-| 空项目             | 目录为空或仅含配置文件                    | 提示用户项目内容过少，建议提供完整项目                      |
-| 超大项目           | 文件数量超过 10000                        | 提示用户项目过大，建议缩小范围或增加超时时间                |
-| 网络超时           | GitHub 克隆超时                           | 重试一次；仍失败则提示用户检查网络或使用本地路径            |
-| 循环依赖检测       | 模块间存在循环依赖                        | 记录警告信息，继续执行但在输出中标记风险                    |
-| GitNexus 不可用    | Node.js 未安装或版本过低                  | 跳过 GitNexus 相关功能，继续执行 nexus-mapper 分析         |
-| Git 历史缺失       | 项目无 .git 目录                          | 降级为纯代码分析，在输出中标注 `evidence_gap: git_history` |
+| 场景 | 触发条件 | 处理动作 | 恢复策略 |
+|------|----------|----------|----------|
+| **项目不存在** | 本地路径无效或 GitHub 克隆失败 | 提示用户检查路径是否正确，退出流程 | 验证路径后重新执行 |
+| **技术栈识别失败** | 无构建配置文件 | 标记为未知技术栈，使用通用模板，提示用户手动指定 | 用户手动指定技术栈 |
+| **输出目录已有文件** | 目标文件已存在 | **[检查点]** 询问用户「覆盖 / 跳过 / 追加」三选一 | 用户选择处理方式 |
+| **GitHub 权限不足** | 克隆失败（404/403/认证失败） | 提示用户检查权限，提供本地路径作为替代方案 | 使用本地路径或获取授权 |
+| **空项目** | 目录为空或仅含配置文件 | 提示用户项目内容过少，建议提供完整项目 | 提供完整项目目录 |
+| **超大项目** | 文件数量超过 10000 | 提示用户项目过大，建议缩小范围或增加超时时间 | 缩小扫描范围 |
+| **网络超时** | GitHub 克隆超时 | 重试一次；仍失败则提示用户检查网络或使用本地路径 | 检查网络或使用本地路径 |
+| **循环依赖检测** | 模块间存在循环依赖 | 记录警告信息，继续执行但在输出中标记风险 | 手动修复循环依赖 |
+| **GitNexus 不可用** | Node.js 未安装或版本过低 | 跳过 GitNexus 相关功能，继续执行 nexus-mapper 分析 | 安装 Node.js 18+ |
+| **Git 历史缺失** | 项目无 .git 目录 | 降级为纯代码分析，在输出中标注 `evidence_gap: git_history` | 初始化 Git 仓库 |
+| **规则冲突检测** | 新旧规则存在冲突 | **[检查点]** 展示冲突详情，询问用户解决方式 | 用户选择保留/合并/替换 |
 
-## 命令行接口
+## 🖥️ 命令行接口
 
 ```bash
 # 扫描本地项目
@@ -375,26 +445,44 @@ python3 scripts/main.py /path/to/project --rules-only
 # 指定工具
 python3 scripts/main.py /path/to/project --tools claude,cursor
 
-# 启用 GitNexus 可视化（新增）
+# 启用 GitNexus 可视化
 python3 scripts/main.py /path/to/project --with-gitnexus
 
-# 仅启用 Git 历史分析，不启动 Web UI（新增）
+# 仅启用 Git 历史分析，不启动 Web UI
 python3 scripts/main.py /path/to/project --git-history-only
+
+# 初始化新项目规则
+python3 scripts/main.py /path/to/project --init --tech-stack java
+
+# 更新现有规则
+python3 scripts/main.py /path/to/project --update-rules
+
+# 抽取 Legacy 项目规则
+python3 scripts/main.py /path/to/project --extract-rules --deep
+
+# 执行规则审计
+python3 scripts/main.py /path/to/project --audit-rules
+
+# 启用详细日志
+python3 scripts/main.py /path/to/project --verbose
+
+# 指定扫描深度（quick/standard/deep）
+python3 scripts/main.py /path/to/project --depth deep
 ```
 
-## 脚本文件
+## 📁 脚本文件
 
-| 脚本                               | 职责                             |
-| ---------------------------------- | -------------------------------- |
-| `scripts/main.py`                 | 统一入口，编排全流程              |
-| `scripts/scan_engine.py`           | 项目扫描、技术栈检测              |
-| `scripts/knowledge_extractor.py`   | 知识提取、业务流程推断            |
-| `scripts/report_generator.py`       | Wiki 文档生成                     |
-| `scripts/rule_generator.py`         | 规则文件生成（按技术栈选择模板）  |
-| `scripts/github_fetcher.py`        | GitHub 链接处理                   |
-| `scripts/code_explorer.py`         | 多文件/跨目录代码探查             |
+| 脚本 | 职责 | 核心功能 |
+|------|------|----------|
+| `scripts/main.py` | 统一入口，编排全流程 | 参数解析、流程调度、结果汇总 |
+| `scripts/scan_engine.py` | 项目扫描、技术栈检测 | 文件遍历、技术栈识别、AST 提取 |
+| `scripts/knowledge_extractor.py` | 知识提取、业务流程推断 | 业务规则提取、架构模式识别 |
+| `scripts/report_generator.py` | Wiki 文档生成 | 双轨文档输出、格式标准化 |
+| `scripts/rule_generator.py` | 规则文件生成 | 模板选择、规则合并、验证 |
+| `scripts/github_fetcher.py` | GitHub 链接处理 | 仓库克隆、分支切换、权限处理 |
+| `scripts/code_explorer.py` | 多文件/跨目录代码探查 | 代码搜索、依赖分析、模式匹配 |
 
-## 子技能接口
+## 🔌 子技能接口
 
 ### nexus-mapper
 
@@ -422,3 +510,30 @@ node proxy.mjs /path/to/dist 8888
 # 代码查询
 python3 skills/nexus-query/scripts/query_graph.py /path/to/project "用户服务"
 ```
+
+## 📊 性能指标
+
+| 指标 | 目标值 | 实际值 |
+|------|--------|--------|
+| 扫描覆盖率 | >= 95% | 监控中 |
+| 技术栈识别准确率 | >= 98% | 监控中 |
+| 标准项目执行时间 | < 2 分钟 | 监控中 |
+| 规则置信度 HIGH | >= 70% | 监控中 |
+| 输出完整性 | >= 95% | 监控中 |
+
+## 🧪 测试验证
+
+测试用例位置：`tests/test-prompts.json`
+
+| 测试 ID | 测试场景 | 预期输出 |
+|---------|----------|----------|
+| 1 | 分析本地 Java 项目 | 正确识别 Spring Boot，生成完整文档 |
+| 2 | 分析 GitHub Python 仓库 | 正确识别 FastAPI，生成规则文件 |
+| 3 | 分析 JS/TS 前端项目 | 正确识别 Next.js，生成 Wiki |
+| 4 | 分析 Go 后端项目 | 正确识别 Gin，生成技术栈配置 |
+| 5 | 分析未知技术栈项目 | 使用通用模板，提示用户确认 |
+| 6 | 初始化 Java 项目规则 | 使用 Java/Spring Boot 模板生成规则 |
+| 7 | 更新项目规则文件 | 检测差异、展示预览、合并更新 |
+| 8 | 从 Legacy 项目抽取规范 | 分析代码、归纳约定、生成规则 |
+| 9 | 启用 GitNexus 可视化 | 启动后台索引、生成图谱 |
+| 10 | 验证规则文件一致性 | 语法检查、冲突检测、生成报告 |

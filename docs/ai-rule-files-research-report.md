@@ -8,8 +8,6 @@ https://x.com/karpathy/status/2015883857489522876
 
 https://github.com/forrestchang/andrej-karpathy-skills
 
-![1777517643109](image/ai-rule-files-research-report/1777517643109.png)
-
 1. Think Before Coding
 2. Simplicity First
 3. Surgical Changes
@@ -665,6 +663,8 @@ git submodule add [内部组件库地址] reference-projects/internal-ui
 ```
 
 ## 6.4 项目扫描工具
+
+详见./skills/repo-to-wiki/SKILL.md
 
 ---
 
