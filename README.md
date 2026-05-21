@@ -309,3 +309,11 @@ MIT
 ---
 
 **最后更新**：2026-05-21
+
+---
+
+## 📢 关注公众号
+
+欢迎关注公众号「AI Agentic共创」，获取更多 AI 代理工程技术分享：
+
+![AI Agentic共创公众号](docs/laoyan-wechat.png)
