@@ -1,0 +1,52 @@
+{
+  "features": [
+    {
+      "id": "feat-001",
+      "name": "Harness Creator Core",
+      "description": "核心 Harness 构建功能：五子系统架构模板、AGENTS.md/CLAUDE.md 生成、记忆持久化模式",
+      "dependencies": [],
+      "status": "in-progress",
+      "evidence": "已创建 harness-creator 技能，包含 templates/ 和 references/ 目录"
+    },
+    {
+      "id": "feat-002",
+      "name": "Project Scanner",
+      "description": "项目扫描功能：AST 解析、文件树生成、技术栈识别、Git 历史分析",
+      "dependencies": ["feat-001"],
+      "status": "done",
+      "evidence": "repo-to-wiki 技能已完成，支持多技术栈扫描"
+    },
+    {
+      "id": "feat-003",
+      "name": "Wiki Generation",
+      "description": "双轨知识库生成：human 文档（给人读）和 ai 文档（给 AI 读）",
+      "dependencies": ["feat-002"],
+      "status": "done",
+      "evidence": "支持 PROJECT_WIKI.md、BUSINESS_QA.md、ARCHITECTURE.md 生成"
+    },
+    {
+      "id": "feat-004",
+      "name": "AI Rule Files",
+      "description": "AI 编程规则文件生成：CLAUDE.md、AGENTS.md、.cursorrules、模块化规则",
+      "dependencies": ["feat-001", "feat-002"],
+      "status": "done",
+      "evidence": "支持多技术栈规则模板"
+    },
+    {
+      "id": "feat-005",
+      "name": "Verification Framework",
+      "description": "验证工作流：测试运行、质量检查、效果评估基准测试",
+      "dependencies": ["feat-001"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-006",
+      "name": "Session Continuity",
+      "description": "会话连续性：progress.md、session-handoff、上下文持久化",
+      "dependencies": ["feat-001"],
+      "status": "not-started",
+      "evidence": ""
+    }
+  ]
+}
